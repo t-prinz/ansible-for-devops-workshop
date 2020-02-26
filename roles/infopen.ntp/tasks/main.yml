@@ -1,0 +1,27 @@
+---
+
+# Main tasks file for ntp role
+
+- name: 'INIT | Manage variables to use for our target'
+  import_tasks: "{{ role_path }}/tasks/manage_variables.yml"
+  tags:
+    - 'role::ntp'
+    - 'role::ntp::config'
+    - 'role::ntp::init'
+    - 'role::ntp::install'
+
+
+- name: 'INSTALL | Manage OS family installation tasks'
+  become: True
+  include: "{{ role_path }}/tasks/install_{{ ansible_os_family | lower }}.yml"
+  tags:
+    - 'role::ntp'
+    - 'role::ntp::install'
+
+
+- name: 'CONFIG | Manage configuration tasks'
+  become: True
+  include: "{{ role_path }}/tasks/configure.yml"
+  tags:
+    - 'role::ntp'
+    - 'role::ntp::config'

@@ -1,0 +1,10 @@
+---
+- name: Purge unnecessary applications from systems
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Ensure nano is removed
+      package:
+        name: nano
+        state: absent

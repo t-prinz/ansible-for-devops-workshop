@@ -1,0 +1,12 @@
+---
+
+# Debian install tasks
+
+- name: 'INSTALL | APT | Install packages'
+  apt:
+    name: "{{ item.name }}"
+    state: "{{ item.state | default('present') }}"
+    update_cache: "{{ ntp_repository_update_cache }}"
+    cache_valid_time: "{{ ntp_repository_cache_valid_time }}"
+  with_items: "{{ ntp_packages }}"
+  notify: 'HANDLER | Restart ntp'

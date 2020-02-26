@@ -1,0 +1,19 @@
+---
+
+# Configure tasks
+
+- name: 'CONFIG | Generate ntp config file'
+  template:
+    src: "{{ role_path }}/templates/ntp.conf.j2"
+    dest: "{{ ntp_config_file_dest }}"
+    owner: "{{ ntp_config_file_owner }}"
+    group: "{{ ntp_config_file_group }}"
+    mode: "{{ ntp_config_file_mode }}"
+  notify: 'HANDLER | Restart ntp'
+
+
+- name: 'CONFIG | Manage ntp service'
+  service:
+    name: "{{ ntp_service.name }}"
+    enabled: "{{ ntp_service.enabled }}"
+    state: "{{ ntp_service.state }}"
